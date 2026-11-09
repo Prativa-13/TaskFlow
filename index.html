@@ -1,0 +1,463 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="TaskFlow is a smart task management and productivity dashboard.">
+
+    <title>TaskFlow | Smart Task Management</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+                <span>TaskFlow<span class="brand-dot">.</span></span>
+            </div>
+
+            <div class="sidebar-label">MENU</div>
+
+            <nav class="navigation">
+                <button class="nav-link active" data-page="dashboard">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>Dashboard</span>
+                </button>
+
+                <button class="nav-link" data-page="tasks">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>My Tasks</span>
+                </button>
+
+                <button class="nav-link" data-page="today">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>Today</span>
+                </button>
+
+                <button class="nav-link" data-page="upcoming">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>Upcoming</span>
+                </button>
+
+                <button class="nav-link" data-page="completed">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Completed</span>
+                </button>
+
+                <button class="nav-link" data-page="analytics">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="productivity-card">
+                    <div class="productivity-icon">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3>Stay Productive!</h3>
+                    <p>Small steps every day lead to big achievements.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">T</div>
+                    <div class="profile-info">
+                        <h4>TaskFlow User</h4>
+                        <p>Personal Workspace</p>
+                    </div>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main Area -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="top-header">
+
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div>
+                        <p class="welcome-text">Welcome back! 👋</p>
+                        <h1 id="pageTitle">Dashboard</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="date-display">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="currentDate"></span>
+                    </div>
+
+                    <button class="header-add-btn" id="headerAddBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add New Task</span>
+                    </button>
+                </div>
+
+            </header>
+
+            <!-- Dashboard Page -->
+            <section class="page-section active" id="dashboardPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Here's your overview</h2>
+                        <p>Track your progress and stay on top of your work.</p>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="stats-grid">
+
+                    <article class="stat-card purple-card">
+                        <div class="stat-top">
+                            <span>Total Tasks</span>
+                            <div class="stat-icon purple-icon">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                        </div>
+                        <h2 id="totalTasks">0</h2>
+                        <p>All your tasks</p>
+                    </article>
+
+                    <article class="stat-card green-card">
+                        <div class="stat-top">
+                            <span>Completed</span>
+                            <div class="stat-icon green-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+                        <h2 id="completedTasks">0</h2>
+                        <p>Tasks finished</p>
+                    </article>
+
+                    <article class="stat-card orange-card">
+                        <div class="stat-top">
+                            <span>Pending</span>
+                            <div class="stat-icon orange-icon">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                        </div>
+                        <h2 id="pendingTasks">0</h2>
+                        <p>Tasks remaining</p>
+                    </article>
+
+                    <article class="stat-card red-card">
+                        <div class="stat-top">
+                            <span>Overdue</span>
+                            <div class="stat-icon red-icon">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                        <h2 id="overdueTasks">0</h2>
+                        <p>Past due tasks</p>
+                    </article>
+
+                </div>
+
+                <!-- Progress -->
+                <section class="content-card progress-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <h2>Overall Progress</h2>
+                            <p>Keep moving towards your goals.</p>
+                        </div>
+
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+
+                    <div class="progress-footer">
+                        <span id="progressMessage">Let's get started!</span>
+                        <span id="progressCount">0 of 0 completed</span>
+                    </div>
+
+                </section>
+
+                <!-- Recent Tasks -->
+                <section class="content-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <h2>Recent Tasks</h2>
+                            <p>Your latest tasks at a glance.</p>
+                        </div>
+
+                        <button class="text-btn" data-go="tasks">
+                            View All <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="task-list" id="recentTaskList"></div>
+
+                </section>
+
+            </section>
+
+            <!-- Tasks Page -->
+            <section class="page-section" id="tasksPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Manage Your Tasks</h2>
+                        <p>Create, organize and complete your daily activities.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="task-toolbar">
+
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" id="taskSearch" placeholder="Search your tasks...">
+                        </div>
+
+                        <div class="filter-controls">
+                            <select id="categoryFilter" aria-label="Filter by category">
+                                <option value="all">All Categories</option>
+                                <option value="Work">Work</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Study">Study</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <select id="statusFilter" aria-label="Filter by status">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="task-list" id="allTaskList"></div>
+
+                </div>
+
+            </section>
+
+            <!-- Today Page -->
+            <section class="page-section" id="todayPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Today's Tasks</h2>
+                        <p>Focus on what needs to be done today.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="task-list" id="todayTaskList"></div>
+                </div>
+
+            </section>
+
+            <!-- Upcoming Page -->
+            <section class="page-section" id="upcomingPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Upcoming Tasks</h2>
+                        <p>Prepare for the tasks coming your way.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="task-list" id="upcomingTaskList"></div>
+                </div>
+
+            </section>
+
+            <!-- Completed Page -->
+            <section class="page-section" id="completedPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Completed Tasks</h2>
+                        <p>Celebrate everything you have accomplished.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="task-list" id="completedTaskList"></div>
+                </div>
+
+            </section>
+
+            <!-- Analytics Page -->
+            <section class="page-section" id="analyticsPage">
+
+                <div class="section-intro">
+                    <div>
+                        <h2>Productivity Analytics</h2>
+                        <p>Understand your progress and performance.</p>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+
+                    <article class="content-card analytics-card">
+                        <h3>Completion Rate</h3>
+
+                        <div class="chart-container">
+                            <div class="donut-chart" id="donutChart">
+                                <div class="donut-center">
+                                    <strong id="chartPercentage">0%</strong>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-legend">
+                            <span><i class="legend-dot completed-dot"></i> Completed</span>
+                            <span><i class="legend-dot pending-dot"></i> Pending</span>
+                        </div>
+                    </article>
+
+                    <article class="content-card analytics-card">
+                        <h3>Task Summary</h3>
+
+                        <div class="summary-row">
+                            <span>Total Tasks</span>
+                            <strong id="analyticsTotal">0</strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Completed</span>
+                            <strong id="analyticsCompleted">0</strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Pending</span>
+                            <strong id="analyticsPending">0</strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Overdue</span>
+                            <strong id="analyticsOverdue">0</strong>
+                        </div>
+                    </article>
+
+                </div>
+
+            </section>
+
+            <footer class="footer">
+                <p>© 2026 TaskFlow. Built to make every day productive.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- Add/Edit Task Modal -->
+    <div class="modal-overlay" id="taskModal">
+
+        <div class="modal">
+
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Create New Task</h2>
+                    <p>Fill in the details of your task.</p>
+                </div>
+
+                <button class="close-btn" id="closeModal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="taskForm">
+
+                <div class="form-group">
+                    <label for="taskTitle">Task Title *</label>
+                    <input type="text" id="taskTitle" placeholder="e.g. Complete JavaScript assignment" maxlength="80" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" placeholder="Add some details about your task..." rows="3" maxlength="300"></textarea>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="taskCategory">Category *</label>
+                        <select id="taskCategory" required>
+                            <option value="Work">Work</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Study">Study</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskPriority">Priority *</label>
+                        <select id="taskPriority" required>
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDate">Due Date *</label>
+                    <input type="date" id="taskDate" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelModal">Cancel</button>
+                    <button type="submit" class="submit-btn" id="submitTaskBtn">
+                        Create Task
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Task created successfully!</span>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
